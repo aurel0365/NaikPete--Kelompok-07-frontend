@@ -158,11 +158,11 @@ class HomeScreen extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.description),
-            label: "Layanan",
+            label: "Jadwal",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
-            label: "Obrolan",
+            label: "FAQ",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
