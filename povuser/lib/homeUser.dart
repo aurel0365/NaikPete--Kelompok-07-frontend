@@ -98,19 +98,24 @@ class HomeScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
-              GridView.count(
-                crossAxisCount: 3,
-                shrinkWrap: true,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  _buildFeatureCard(Icons.directions_bus, "Pete-pete"),
-                  _buildFeatureCard(Icons.confirmation_num, "Tiket One-Day"),
-                  _buildFeatureCard(Icons.route, "Rute"),
-                  _buildFeatureCard(Icons.location_on, "Halte"),
-                  _buildFeatureCard(Icons.schedule, "Jadwal"),
-                ],
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  int crossAxisCount = constraints.maxWidth > 600 ? 5 : 3;
+                  return GridView.count(
+                    crossAxisCount: crossAxisCount,
+                    shrinkWrap: true,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      _buildFeatureCard(Icons.directions_bus, "Pete-pete"),
+                      _buildFeatureCard(Icons.confirmation_num, "Tiket One-Day"),
+                      _buildFeatureCard(Icons.route, "Rute"),
+                      _buildFeatureCard(Icons.location_on, "Halte"),
+                      _buildFeatureCard(Icons.schedule, "Jadwal"),
+                    ],
+                  );
+                },
               ),
               const SizedBox(height: 20),
               ClipRRect(
@@ -155,17 +160,21 @@ class HomeScreen extends StatelessWidget {
   Widget _buildFeatureCard(IconData icon, String label) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 40, color: Color(0xFF42C8DC)),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-        ],
+      child: Container(
+        width: 80, // Adjust width for smaller display on Windows
+        height: 100, // Adjust height for smaller display on Windows
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 40, color: Color(0xFF42C8DC)),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }
