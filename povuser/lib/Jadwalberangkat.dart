@@ -22,30 +22,24 @@ class JadwalPetePeteScreen extends StatefulWidget {
 class _JadwalPetePeteScreenState extends State<JadwalPetePeteScreen> {
   final List<Map<String, String>> jadwalPetePete = [
     {
-      'nama': 'FlixBus',
+      'nama': 'Pete-pete A',
       'status': 'Termurah',
-      'harga': '£125',
       'rute': 'Manchester - Paris',
       'waktu': '1:40 PM - 8:40 PM',
-      'transfer': '1 transfer',
       'jarak': '5 km', // Menambahkan data jarak
     },
     {
       'nama': 'Eurolines',
       'status': '',
-      'harga': '£143',
       'rute': 'Manchester - Paris',
       'waktu': '3:05 PM - 7:30 PM',
-      'transfer': '1 transfer',
       'jarak': '10 km', // Menambahkan data jarak
     },
     {
       'nama': 'BlaBlaCar',
       'status': '',
-      'harga': '£132',
       'rute': 'Manchester - Paris',
       'waktu': '1:40 PM - 8:40 PM',
-      'transfer': '1 transfer',
       'jarak': '2 km', // Menambahkan data jarak
     },
   ];
@@ -153,23 +147,14 @@ class _JadwalPetePeteScreenState extends State<JadwalPetePeteScreen> {
                             jadwal['waktu']!,
                             style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            jadwal['transfer']!,
-                            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-                          ),
-                          const SizedBox(height: 8),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              jadwal['harga']!,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
+                          if (_selectedTabIndex == 1) // Menampilkan jarak hanya di tab Terdekat
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Text(
+                                'Jarak ke lokasi Anda: ${jadwal['jarak']}',
+                                style: TextStyle(fontSize: 14, color: Colors.blue),
                               ),
                             ),
-                          ),
                         ],
                       ),
                     ),
