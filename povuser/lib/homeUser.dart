@@ -119,13 +119,25 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 20),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.asset(
-                  'assets/images/banner.jpg',
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+              SizedBox(
+                height: 180,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5, // Jumlah gambar
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 16.0),
+                      child: ClipPath(
+                        clipper: CustomClipPath(),
+                        child: Image.asset(
+                          'assets/images/Ticket.${index + 1}.png',
+                          width: 300,
+                          height: 180,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
