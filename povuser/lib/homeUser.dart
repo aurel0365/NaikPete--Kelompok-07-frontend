@@ -24,22 +24,23 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        leading: Padding(
-          padding: const EdgeInsets.only(top: 25.0), 
-          child: const Icon(Icons.menu, color: Colors.black),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(top: 25.0, right: 16.0),
-            child: const CircleAvatar(
+      elevation: 0,
+      backgroundColor: Colors.white,
+      leading: Center(
+        child: Icon(Icons.menu, color: Colors.black),
+      ),
+      actions: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: CircleAvatar(
               backgroundColor: Colors.grey,
               child: Icon(Icons.person, color: Colors.white),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
+    ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
