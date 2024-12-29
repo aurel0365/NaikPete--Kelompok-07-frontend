@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:povuser/Jadwalberangkat.dart';
 
-void main() {
-  runApp(const PetePeteApp());
-}
-
-class PetePeteApp extends StatelessWidget {
-  const PetePeteApp({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: const Color(0xFF42C8DC),
-        scaffoldBackgroundColor: Colors.white,
-      ),
-      home: HomeScreen(),
-    );
-  }
+  _HomeScreenState createState() => _HomeScreenState();
 }
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0;
+
+  // Fungsi untuk menangani navigasi ke layar berbeda
+  void _onItemTapped(int index) {
+    if (index == 1) {
+      // Pindah ke layar Jadwal
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>  JadwalPetePeteScreen()),
+      );
+    } else {
+      setState(() {
+        _currentIndex = index;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,38 +123,17 @@ class HomeScreen extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 25),
-              SizedBox(
-                height: 180,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5, // Jumlah gambar
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 16.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Image.asset(
-                          'assets/images/Ticket.jpg',
-                          width: 300,
-                          height: 180,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
+        currentIndex: _currentIndex,
         selectedItemColor: const Color(0xFF42C8DC),
         unselectedItemColor: Colors.grey,
         showSelectedLabels: true,
         showUnselectedLabels: false,
+        onTap: _onItemTapped, // Menangani tap pada bottom navigation
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
