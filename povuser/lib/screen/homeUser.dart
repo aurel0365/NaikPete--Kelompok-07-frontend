@@ -1,45 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:pov_user/screen/Jadwalberangkat.dart';
-import 'package:pov_user/widget/BottomBar.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreens extends StatefulWidget {
+  const HomeScreens({super.key});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0; // Declare _currentIndex here
-
-  // Fungsi untuk menangani navigasi ke layar berbeda
-  void _onItemTapped(int index) {
-  if (index == 1) {
-    // Pindah ke layar Jadwal dengan animasi
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => const JadwalPetePeteScreen(),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const begin = Offset(1.0, 0.0); // Mulai dari kanan
-          const end = Offset.zero; // Berhenti di posisi akhir
-          const curve = Curves.easeInOut;
-
-          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-          var offsetAnimation = animation.drive(tween);
-
-          return SlideTransition(position: offsetAnimation, child: child);
-        },
-      ),
-    );
-  } else {
-    setState(() {
-      _currentIndex = index;  // Update the index
-    });
-  }
-}
-
-
+class _HomeScreenState extends State<HomeScreens> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,10 +108,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: _currentIndex,  // Pass _currentIndex to BottomNavBar
-        onItemTapped: _onItemTapped,  // Pass the onItemTapped function
       ),
     );
   }

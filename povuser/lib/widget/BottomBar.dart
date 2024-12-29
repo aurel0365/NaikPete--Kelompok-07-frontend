@@ -20,21 +20,21 @@ class BottomNavBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.schedule),
-          label: 'Jadwal', // Change the label to 'Jadwal'
+          label: 'Jadwal',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.confirmation_num),
-          label: 'Tiket', // Change the label to 'Tiket'
+          label: 'Tiket',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          label: 'Profile', // Add the new 'Profile' item
+          label: 'Profile',
         ),
       ],
       currentIndex: selectedIndex,
       onTap: onItemTapped,
-      selectedItemColor: Colors.blue, // Set the selected item color to blue
-      unselectedItemColor: Colors.grey, // Set the unselected items color
+      selectedItemColor: Colors.blue,
+      unselectedItemColor: Colors.grey,
     );
   }
 }
