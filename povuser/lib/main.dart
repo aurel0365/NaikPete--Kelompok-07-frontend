@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:povuser/homeUser.dart';
+import 'package:pov_user/screen/homeUser.dart';
 void main() {
   runApp(const PetePeteApp());
 }

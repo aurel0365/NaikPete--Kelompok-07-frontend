@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:povuser/Jadwalberangkat.dart';
+import 'package:pov_user/screen/Jadwalberangkat.dart';
+import 'package:pov_user/widget/BottomBar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,22 +10,35 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
+  int _currentIndex = 0; // Declare _currentIndex here
 
   // Fungsi untuk menangani navigasi ke layar berbeda
   void _onItemTapped(int index) {
-    if (index == 1) {
-      // Pindah ke layar Jadwal
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) =>  JadwalPetePeteScreen()),
-      );
-    } else {
-      setState(() {
-        _currentIndex = index;
-      });
-    }
+  if (index == 1) {
+    // Pindah ke layar Jadwal dengan animasi
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => const JadwalPetePeteScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(1.0, 0.0); // Mulai dari kanan
+          const end = Offset.zero; // Berhenti di posisi akhir
+          const curve = Curves.easeInOut;
+
+          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          var offsetAnimation = animation.drive(tween);
+
+          return SlideTransition(position: offsetAnimation, child: child);
+        },
+      ),
+    );
+  } else {
+    setState(() {
+      _currentIndex = index;  // Update the index
+    });
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 180,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 5, // Jumlah gambar
+                  itemCount: 5,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(right: 16.0),
@@ -98,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
-              const SizedBox(height: 40), // Jarak lebih besar antara gambar dan layanan
+              const SizedBox(height: 40),
               const Text(
                 "Layanan apa yang anda butuhkan?",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -127,31 +141,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        selectedItemColor: const Color(0xFF42C8DC),
-        unselectedItemColor: Colors.grey,
-        showSelectedLabels: true,
-        showUnselectedLabels: false,
-        onTap: _onItemTapped, // Menangani tap pada bottom navigation
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.description),
-            label: "Jadwal",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: "FAQ",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: "Profil",
-          ),
-        ],
+      bottomNavigationBar: BottomNavBar(
+        selectedIndex: _currentIndex,  // Pass _currentIndex to BottomNavBar
+        onItemTapped: _onItemTapped,  // Pass the onItemTapped function
       ),
     );
   }
@@ -161,8 +153,8 @@ class _HomeScreenState extends State<HomeScreen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 2,
       child: Container(
-        width: 80, // Adjust width for smaller display on Windows
-        height: 100, // Adjust height for smaller display on Windows
+        width: 80,
+        height: 100,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
