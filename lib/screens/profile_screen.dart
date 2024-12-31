@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pete/screens/faq_screen.dart';
+import 'package:flutter_pete/screens/login_screen.dart';
 import 'home_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -82,6 +84,10 @@ class ProfileScreen extends StatelessWidget {
               title: const Text('Keluar'),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {
+                Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
                 print('Keluar ditekan');
               },
             ),
@@ -101,7 +107,16 @@ class ProfileScreen extends StatelessWidget {
                 builder: (context) => HomeScreen(username: username),
               ),
             );
-          }else if (index == 3) {
+          }
+          else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FAQScreen(username: username),
+              ),
+            );
+          }
+          else if (index == 3) {
             Navigator.push(
               context,
               MaterialPageRoute(

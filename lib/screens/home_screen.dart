@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pete/screens/faq_screen.dart';
 import 'package:flutter_pete/screens/profile_screen.dart';
 import 'package:flutter_pete/screens/schedule_screen.dart';
 
@@ -222,7 +223,16 @@ class HomeScreen extends StatelessWidget {
                 builder: (context) => HomeScreen(username: username),
               ),
             );
-          }else if (index == 3) {
+          }
+          else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FAQScreen(username: username),
+              ),
+            );
+          }
+          else if (index == 3) {
             Navigator.push(
               context,
               MaterialPageRoute(
