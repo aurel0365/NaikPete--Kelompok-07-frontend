@@ -137,7 +137,7 @@ class HomeScreen extends StatelessWidget {
                     // Navigasi ke ScheduleScreen tanpa mengganti layar sebelumnya
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const ScheduleScreen()),
+                      MaterialPageRoute(builder: (context) => TrayekListScreen()),
                     );
                   },
                 ),
