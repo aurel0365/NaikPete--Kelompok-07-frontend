@@ -1,22 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(HistoryApp());
-}
-
-class HistoryApp extends StatelessWidget {
-  const HistoryApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Sejarah Perjalanan',
-      home: HistoryScreen(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
 
@@ -26,33 +9,33 @@ class HistoryScreen extends StatelessWidget {
       length: 3, // Jumlah tab
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
+          backgroundColor: Colors.white, // Warna putih untuk latar belakang AppBar
+          foregroundColor: Colors.black, // Warna hitam untuk teks dan ikon
           elevation: 0,
-          title: Text(
-            'Sejarah perjalanan',
+          title: const Text(
+            'Sejarah Perjalanan',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
-          bottom: TabBar(
-            labelColor: Colors.blue, // Warna teks tab aktif
-            unselectedLabelColor: Colors.grey, // Warna teks tab non-aktif
-            indicatorColor: Colors.blue, // Garis bawah tab aktif
+          bottom: const TabBar(
+            labelColor: Color(0xFF42C8DC), // Warna biru untuk teks tab aktif
+            unselectedLabelColor: Colors.grey, // Warna abu-abu untuk teks tab non-aktif
+            indicatorColor: Color(0xFF42C8DC), // Garis bawah tab aktif (biru)
             indicatorWeight: 3.0,
             labelStyle: TextStyle(fontWeight: FontWeight.bold),
             tabs: [
-              Tab(text: 'Dalam perjalanan'),
+              Tab(text: 'Dalam Perjalanan'),
               Tab(text: 'Transaksi'),
-              Tab(text: 'Perjalanan selesai'),
+              Tab(text: 'Perjalanan Selesai'),
             ],
           ),
         ),
         body: TabBarView(
-          physics: BouncingScrollPhysics(), // Smooth scroll physics
+          physics: const BouncingScrollPhysics(), // Smooth scroll physics
           children: [
-            Center(child: Text('Dalam Perjalanan')),
-            TransactionHistory(),
-            Center(child: Text('Perjalanan Selesai')),
+            const Center(child: Text('Dalam Perjalanan')),
+            const TransactionHistory(),
+            const Center(child: Text('Perjalanan Selesai')),
           ],
         ),
       ),
@@ -70,11 +53,11 @@ class TransactionHistory extends StatelessWidget {
       itemCount: 3, // Jumlah data
       itemBuilder: (context, index) {
         return Card(
-          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           elevation: 2,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: ListTile(
-            contentPadding: EdgeInsets.all(12),
+            contentPadding: const EdgeInsets.all(12),
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
@@ -84,17 +67,26 @@ class TransactionHistory extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            title: Text(
+            title: const Text(
               '11 Nov, 07.00',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black, // Teks hitam untuk judul
+              ),
             ),
-            subtitle: Text(
+            subtitle: const Text(
               'MP – Jalan Boulevard\nPanakkukang – Jalan Pettarani – Jalan Veteran',
-              style: TextStyle(height: 1.5),
+              style: TextStyle(
+                height: 1.5,
+                color: Colors.black54, // Warna hitam transparan untuk subtitle
+              ),
             ),
-            trailing: Text(
+            trailing: const Text(
               'Lihat detail',
-              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Color(0xFF42C8DC), // Biru untuk teks trailing
+                fontWeight: FontWeight.bold,
+              ),
             ),
             onTap: () {
               // Aksi ketika item ditekan
