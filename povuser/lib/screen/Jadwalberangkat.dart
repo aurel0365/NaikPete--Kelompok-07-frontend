@@ -8,6 +8,10 @@ class JadwalPetePeteApp extends StatelessWidget {
     return MaterialApp(
       home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: const Color(0xFF42C8DC),
+        fontFamily: 'Roboto',
+      ),
     );
   }
 }
@@ -21,16 +25,33 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home'),
         centerTitle: true,
+        backgroundColor: const Color(0xFF42C8DC),
       ),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const JadwalPetePeteScreen()),
+              MaterialPageRoute(
+                builder: (context) => const JadwalPetePeteScreen(),
+              ),
             );
           },
-          child: const Text('Lihat Jadwal Pete-pete'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF42C8DC),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+          child: const Text(
+            'Lihat Jadwal Pete-pete',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
         ),
       ),
     );
@@ -69,83 +90,79 @@ class _JadwalPetePeteScreenState extends State<JadwalPetePeteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color(0xFF42C8DC),
         elevation: 0,
         title: const Text(
           'Jadwal Pete-pete',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 17),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
+
         centerTitle: true,
       ),
       body: Column(
         children: [
           Container(
-            color: Colors.black,
-            height: 100,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildTabItem('Semua Jadwal', 0),
-                  _buildTabItem('Terdekat', 1),
-                ],
-              ),
+            color: const Color.fromARGB(255, 237, 237, 237),
+            height: 80,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildTabItem('Semua Jadwal', 0),
+                _buildTabItem('Terdekat', 1),
+              ],
             ),
           ),
+          const SizedBox(height: 10),
           Expanded(
             child: ListView.builder(
               itemCount: jadwalPetePete.length,
               itemBuilder: (context, index) {
                 final jadwal = jadwalPetePete[index];
-                return Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: ListTile(
-                    title: Text(
-                      jadwal['nama']!,
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                return AnimatedPadding(
+                  duration: const Duration(milliseconds: 300),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Tujuan: ${jadwal['rute']}'),
-                        Text('Waktu: ${jadwal['waktu']}'),
-                      ],
-                    ),
-                    trailing: ElevatedButton(
-                      onPressed: () {
-                        // Tampilkan detail jadwal
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: Row(
-                              children: [
-                                Text('Detail ${jadwal['nama']}'),
-                                const Spacer(),
-                                IconButton(
-                                  icon: const Icon(Icons.close),
-                                  onPressed: () => Navigator.pop(context),
-                                ),
-                              ],
-                            ),
-                            content: Text('Rute: ${jadwal['rute']}\nWaktu: ${jadwal['waktu']}'),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  // Tambahkan logika untuk melihat lokasi
-                                  Navigator.pop(context);
-                                },
-                                child: const Text('Lihat Lokasi'),
-                              ),
-                            ],
+                    elevation: 5,
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.all(16),
+                      title: Text(
+                        jadwal['nama']!,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Color(0xFF42C8DC),
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 8),
+                          Text('Tujuan: ${jadwal['rute']}'),
+                          const SizedBox(height: 4),
+                          Text('Waktu: ${jadwal['waktu']}'),
+                        ],
+                      ),
+                      trailing: ElevatedButton(
+                        onPressed: () {
+                          _showDetailDialog(context, jadwal);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF42C8DC),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                        );
-                      },
-                      child: const Text('Detail'),
+                        ),
+                        child: const Text(
+                          'Detail',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ),
                   ),
                 );
@@ -158,35 +175,65 @@ class _JadwalPetePeteScreenState extends State<JadwalPetePeteScreen> {
   }
 
   Widget _buildTabItem(String title, int index) {
-    bool isSelected = _selectedTabIndex == index;
+    final bool isSelected = _selectedTabIndex == index;
 
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         setState(() {
           _selectedTabIndex = index;
         });
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
         decoration: BoxDecoration(
-          border: isSelected
-              ? Border.all(color: Colors.blue, width: 2)
-              : null,
+          color: isSelected ? Colors.white : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 8,
+                  ),
+                ]
+              : [],
         ),
         child: Text(
           title,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.grey,
+            color: isSelected ? const Color(0xFF42C8DC) : Colors.white,
             fontSize: 16,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
     );
   }
-}
 
-void main() {
-  runApp(const JadwalPetePeteApp());
+  void _showDetailDialog(BuildContext context, Map<String, String> jadwal) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Text(
+          'Detail ${jadwal['nama']}',
+          style: const TextStyle(color: Color(0xFF42C8DC), fontWeight: FontWeight.bold),
+        ),
+        content: Text(
+          'Rute: ${jadwal['rute']}\nWaktu: ${jadwal['waktu']}',
+          style: const TextStyle(color: Colors.black, fontSize: 16),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              'Tutup',
+              style: TextStyle(color: Color(0xFF42C8DC), fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
