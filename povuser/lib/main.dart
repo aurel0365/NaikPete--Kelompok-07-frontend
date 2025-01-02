@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'screen/Jadwalberangkat.dart';
 import 'screen/SettingUser.dart';
 import 'screen/TiketUser.dart';
@@ -38,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _pages = [
     HomeScreens(),
     JadwalPetePeteScreen(),
-    TiketUser(),
+    TicketScreen(),
     AccountUser(),
   ];
 
