@@ -1,93 +1,133 @@
 import 'package:flutter/material.dart';
 
 class TicketScreen extends StatelessWidget {
+  const TicketScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pete-Pete Tickets'),
-        backgroundColor: Colors.blue,
-        elevation: 0,
+        elevation: 4,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: const Text(
+          'Tiket One Day',
+          style: TextStyle(
+            color: Color(0xFF42C8DC),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Your Tickets',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 16.0),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+      body: Container(
+        color: Colors.white,
+        child: SingleChildScrollView(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Gambar tiket dengan bayangan
+                  Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                    elevation: 4,
-                    margin: EdgeInsets.symmetric(vertical: 8.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Route: Mall - Campus',
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'Date: 31 December 2024',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'Time: 10:00 AM',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Seat: A${index + 1}',
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.blue,
-                                ),
-                                child: Text('Details'),
-                              ),
-                            ],
-                          )
-                        ],
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Container(
+                        constraints: BoxConstraints(
+                          maxWidth: 800, // Maksimal lebar gambar
+                          maxHeight: 400, // Maksimal tinggi gambar
+                        ),
+                        child: Image.asset(
+                          'assets/images/Tiket.png',
+                          fit: BoxFit.cover, // Gambar tetap proporsional
+                        ),
                       ),
                     ),
-                  );
-                },
+                  ),
+                  const SizedBox(height: 40),
+                  // Nama tiket dengan font cantik
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      double fontSize = constraints.maxWidth > 600 ? 28 : 24;
+                      return Text(
+                        "Tiket One Day",
+                        style: TextStyle(
+                          fontSize: fontSize,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFF42C8DC),
+                          shadows: [
+                            Shadow(
+                              color: Colors.grey.withOpacity(0.4),
+                              blurRadius: 8,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    "Nikmati perjalanan seharian penuh dengan tiket satu hari.\nAkses ke seluruh rute tanpa batas!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black87,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  // Harga tiket
+                  const Text(
+                    "Harga: IDR 7,000",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF42C8DC),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  // Tombol untuk membeli tiket
+                  ElevatedButton(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Tiket One Day dibeli!")),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF42C8DC),
+                      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      shadowColor: Colors.grey.withOpacity(0.4),
+                      elevation: 6,
+                    ),
+                    child: const Text(
+                      "Beli Tiket",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
