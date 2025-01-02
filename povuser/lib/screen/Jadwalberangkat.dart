@@ -6,8 +6,33 @@ class JadwalPetePeteApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: JadwalPetePeteScreen(),
+      home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const JadwalPetePeteScreen()),
+            );
+          },
+          child: const Text('Lihat Jadwal Pete-pete'),
+        ),
+      ),
     );
   }
 }
@@ -23,24 +48,18 @@ class _JadwalPetePeteScreenState extends State<JadwalPetePeteScreen> {
   final List<Map<String, String>> jadwalPetePete = [
     {
       'nama': 'Pete-pete A',
-      'status': 'Termurah',
       'rute': 'Manchester - Paris',
-      'waktu': '1:40 PM - 8:40 PM',
-      'jarak': '5 km',
+      'waktu': '1:40 PM',
     },
     {
-      'nama': 'Eurolines',
-      'status': '',
-      'rute': 'Manchester - Paris',
-      'waktu': '3:05 PM - 7:30 PM',
-      'jarak': '10 km',
+      'nama': 'Pete-pete B',
+      'rute': 'Liverpool - London',
+      'waktu': '3:05 PM',
     },
     {
-      'nama': 'BlaBlaCar',
-      'status': '',
-      'rute': 'Manchester - Paris',
-      'waktu': '1:40 PM - 8:40 PM',
-      'jarak': '2 km',
+      'nama': 'Pete-pete C',
+      'rute': 'Berlin - Munich',
+      'waktu': '5:00 PM',
     },
   ];
 
@@ -48,25 +67,17 @@ class _JadwalPetePeteScreenState extends State<JadwalPetePeteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Filter jadwal berdasarkan tab yang dipilih
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: const Text(
-            'Jadwal Pete-pete',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 17),
-          ),
+        title: const Text(
+          'Jadwal Pete-pete',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 17),
         ),
-        leading: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.pop(context),
-          ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
       ),
@@ -84,6 +95,61 @@ class _JadwalPetePeteScreenState extends State<JadwalPetePeteScreen> {
                   _buildTabItem('Terdekat', 1),
                 ],
               ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: jadwalPetePete.length,
+              itemBuilder: (context, index) {
+                final jadwal = jadwalPetePete[index];
+                return Card(
+                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: ListTile(
+                    title: Text(
+                      jadwal['nama']!,
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Tujuan: ${jadwal['rute']}'),
+                        Text('Waktu: ${jadwal['waktu']}'),
+                      ],
+                    ),
+                    trailing: ElevatedButton(
+                      onPressed: () {
+                        // Tampilkan detail jadwal
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Row(
+                              children: [
+                                Text('Detail ${jadwal['nama']}'),
+                                const Spacer(),
+                                IconButton(
+                                  icon: const Icon(Icons.close),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                              ],
+                            ),
+                            content: Text('Rute: ${jadwal['rute']}\nWaktu: ${jadwal['waktu']}'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  // Tambahkan logika untuk melihat lokasi
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Lihat Lokasi'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      child: const Text('Detail'),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -119,5 +185,8 @@ class _JadwalPetePeteScreenState extends State<JadwalPetePeteScreen> {
       ),
     );
   }
+}
 
+void main() {
+  runApp(const JadwalPetePeteApp());
 }

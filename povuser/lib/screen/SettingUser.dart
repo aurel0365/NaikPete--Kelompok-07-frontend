@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'HistroryUser.dart';
 import 'ProfileUser.dart';
 
 class AccountUser extends StatelessWidget {
@@ -7,12 +8,16 @@ class AccountUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFFFFFF), // Latar belakang putih
       appBar: AppBar(
-        title: const Text('Pengaturan'),
+        title: const Text(
+          'Account User',
+          style: TextStyle(color: Color(0xFF000000)), // Teks hitam
+        ),
         centerTitle: true,
-        backgroundColor: Colors.blueAccent,
-        elevation: 4,
-        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: const Color(0xFFFFFFFF), // Latar belakang putih
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Color(0xFF000000)), // Ikon hitam
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -24,39 +29,41 @@ class AccountUser extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.blueGrey[50],
+                color: const Color(0xFFF5F5F5),
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    spreadRadius: 2,
-                    blurRadius: 8,
-                  ),
-                ],
               ),
               child: Row(
                 children: [
                   const CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.grey,
-                    child: Icon(Icons.person, size: 40, color: Colors.white),
+                    radius: 40,
+                    backgroundImage: AssetImage('assets/profile.jpg'), // Ganti dengan path gambar Anda
                   ),
                   const SizedBox(width: 16),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        'Aurelia Nata',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Colors.black,
-                        ),
+                    children: [
+                      Row(
+                        children: const [
+                          Text(
+                            'Aurelia Nata',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Color(0xFF000000), // Teks hitam
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          Icon(
+                            Icons.edit,
+                            color: Color(0xFF42C8DC), // Ikon biru
+                            size: 20,
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Text(
                         'aureldjijd@gmail.com',
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(color: Colors.grey[700]), // Warna teks abu-abu
                       ),
                     ],
                   ),
@@ -66,32 +73,41 @@ class AccountUser extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Menu Pengaturan
-            const Divider(),
             SettingItem(
-              icon: Icons.person_outline,
-              title: 'Profile Saya',
+              icon: Icons.settings,
+              title: 'My profile',
+              iconColor: const Color(0xFF42C8DC), // Ikon biru
+              textColor: const Color(0xFF000000), // Teks hitam
               onTap: () {
-                // Navigasi ke halaman "Profile Saya"
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Profileuser(),
+                    builder: (context) =>  EditProfileScreen(),
                   ),
                 );
               },
             ),
             SettingItem(
-              icon: Icons.history,
-              title: 'Riwayat',
+              icon: Icons.account_balance_wallet,
+              title: 'History',
+              iconColor: const Color(0xFF42C8DC), // Ikon biru
+              textColor: const Color(0xFF000000), // Teks hitam
               onTap: () {
-                // Navigasi ke halaman "Riwayat"
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>  HistoryScreen(),
+                  ),
+                );
               },
             ),
             SettingItem(
-              icon: Icons.question_answer,
+              icon: Icons.people,
               title: 'FAQ',
+              iconColor: const Color(0xFF42C8DC), // Ikon biru
+              textColor: const Color(0xFF000000), // Teks hitam
               onTap: () {
-                // Navigasi ke halaman "FAQ"
+                // Tambahkan navigasi
               },
             ),
             const Spacer(),
@@ -99,9 +115,9 @@ class AccountUser extends StatelessWidget {
             // Logout Button
             SettingItem(
               icon: Icons.logout,
-              title: 'Keluar',
-              iconColor: Colors.red,
-              textColor: Colors.red,
+              title: 'Logout',
+              iconColor: const Color(0xFF42C8DC), // Ikon biru
+              textColor: const Color(0xFF000000), // Teks hitam
               onTap: () {
                 // Tambahkan logika logout
               },
@@ -124,22 +140,29 @@ class SettingItem extends StatelessWidget {
   const SettingItem({
     required this.icon,
     required this.title,
-    this.iconColor = Colors.black,
-    this.textColor = Colors.black,
+    this.iconColor = const Color(0xFF42C8DC), // Default warna ikon biru
+    this.textColor = const Color(0xFF000000), // Default warna teks hitam
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(
-        icon,
-        color: iconColor,
+      leading: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: iconColor.withOpacity(0.1), // Latar belakang ikon transparan
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          icon,
+          color: iconColor, // Warna ikon
+        ),
       ),
       title: Text(
         title,
         style: TextStyle(
-          color: textColor,
+          color: textColor, // Warna teks
           fontSize: 16,
           fontWeight: FontWeight.w500,
         ),

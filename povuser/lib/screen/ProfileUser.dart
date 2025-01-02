@@ -1,128 +1,104 @@
 import 'package:flutter/material.dart';
 
-class Profileuser extends StatefulWidget {
-  const Profileuser({super.key});
-
-  @override
-  State<Profileuser> createState() => Profileuserstate();
-}
-
-class Profileuserstate extends State<Profileuser> {
-  String selectedGender = '';
-
+class EditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Profile saya'),
-        centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.grey,
-                child: Icon(Icons.person, size: 60, color: Colors.white),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Nama',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Nama terakhir',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Tanggal lahir',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedGender = 'Male';
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: selectedGender == 'Male'
-                            ? Colors.lightBlue
-                            : Colors.grey[200],
-                      ),
-                      child: const Text('Male',
-                          style: TextStyle(color: Colors.black)),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedGender = 'Female';
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: selectedGender == 'Female'
-                            ? Colors.lightBlue
-                            : Colors.grey[200],
-                      ),
-                      child: const Text('Female',
-                          style: TextStyle(color: Colors.black)),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Nomor telepon',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                keyboardType: TextInputType.phone,
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Tambahkan aksi simpan data
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lightBlue,
-                  ),
-                  child: const Text('Simpan',
-                      style: TextStyle(color: Colors.white, fontSize: 16)),
-                ),
-              ),
-            ],
-          ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
+        title: Text(
+          'My Profile',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Stack(
+              children: [
+                CircleAvatar(
+                  radius: 60,
+                  backgroundImage: AssetImage('assets/profile_image.jpg'), // Ganti dengan path gambar Anda
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 4,
+                  child: Container(
+                    height: 35,
+                    width: 35,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.camera_alt, color: Colors.white, size: 20),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 30),
+            _buildTextField(label: 'Full Name', icon: Icons.person, initialValue: 'Coding with T'),
+            SizedBox(height: 16),
+            _buildTextField(label: 'E-Mail', icon: Icons.email, initialValue: 'support@codingwitht.com'),
+            SizedBox(height: 16),
+            _buildTextField(label: 'Phone No', icon: Icons.phone, initialValue: '+92 317 8059528'),
+            SizedBox(height: 16),
+            _buildTextField(label: 'Password', icon: Icons.lock, initialValue: '********', obscureText: true),
+            SizedBox(height: 32),
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 64.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+              child: Text('Edit Profile', style: TextStyle(color: Colors.white, fontSize: 16.0)),
+            ),
+            SizedBox(height: 24),
+            Text('Joined 31 October 2022', style: TextStyle(color: Colors.grey, fontSize: 14.0)),
+            SizedBox(height: 12),
+            TextButton(
+              onPressed: () {},
+              child: Text('Delete', style: TextStyle(color: Colors.red, fontSize: 14.0)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required String label,
+    required IconData icon,
+    required String initialValue,
+    bool obscureText = false,
+  }) {
+    return SizedBox(
+      height: 56,
+      child: TextField(
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          labelText: label,
+          prefixIcon: Icon(icon, color: Colors.blue),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          filled: true,
+          fillColor: Colors.grey[100],
+        ),
+        controller: TextEditingController(text: initialValue),
       ),
     );
   }
