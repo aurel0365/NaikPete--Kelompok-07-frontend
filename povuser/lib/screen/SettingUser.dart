@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'FaqUser.dart';
 import 'HistroryUser.dart';
 import 'ProfileUser.dart';
 
@@ -8,31 +9,42 @@ class AccountUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF), // Latar belakang putih
+      backgroundColor: const Color(0xFFF9F9F9), // Latar belakang abu-abu muda
       appBar: AppBar(
         title: const Text(
           'Account User',
-          style: TextStyle(color: Color(0xFF000000)), // Teks hitam
+          style: TextStyle(
+            color: Color(0xFF42C8DC),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
         backgroundColor: const Color(0xFFFFFFFF), // Latar belakang putih
-        elevation: 0,
+        elevation: 1,
         iconTheme: const IconThemeData(color: Color(0xFF000000)), // Ikon hitam
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Profil Pengguna
-            const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFFF5F5F5),
-                borderRadius: BorderRadius.circular(12),
+                color: const Color(0xFFFFFFFF),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const CircleAvatar(
                     radius: 40,
@@ -70,19 +82,19 @@ class AccountUser extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 32),
 
             // Menu Pengaturan
             SettingItem(
               icon: Icons.settings,
-              title: 'My profile',
+              title: 'My Profile',
               iconColor: const Color(0xFF42C8DC), // Ikon biru
               textColor: const Color(0xFF000000), // Teks hitam
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>  EditProfileScreen(),
+                    builder: (context) => EditProfileScreen(),
                   ),
                 );
               },
@@ -96,18 +108,23 @@ class AccountUser extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>  HistoryScreen(),
+                    builder: (context) => HistoryScreen(),
                   ),
                 );
               },
             ),
             SettingItem(
-              icon: Icons.people,
+              icon: Icons.help_outline,
               title: 'FAQ',
               iconColor: const Color(0xFF42C8DC), // Ikon biru
               textColor: const Color(0xFF000000), // Teks hitam
               onTap: () {
-                // Tambahkan navigasi
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FAQPage(),
+                  ),
+                );
               },
             ),
             const Spacer(),
@@ -116,8 +133,8 @@ class AccountUser extends StatelessWidget {
             SettingItem(
               icon: Icons.logout,
               title: 'Logout',
-              iconColor: const Color(0xFF42C8DC), // Ikon biru
-              textColor: const Color(0xFF000000), // Teks hitam
+              iconColor: const Color(0xFFD9534F), // Ikon merah
+              textColor: const Color(0xFFD9534F), // Teks merah
               onTap: () {
                 // Tambahkan logika logout
               },
@@ -147,32 +164,35 @@ class SettingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: iconColor.withOpacity(0.1), // Latar belakang ikon transparan
-          shape: BoxShape.circle,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: ListTile(
+        leading: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: iconColor.withOpacity(0.1), // Latar belakang ikon transparan
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            icon,
+            color: iconColor, // Warna ikon
+          ),
         ),
-        child: Icon(
-          icon,
-          color: iconColor, // Warna ikon
+        title: Text(
+          title,
+          style: TextStyle(
+            color: textColor, // Warna teks
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-      ),
-      title: Text(
-        title,
-        style: TextStyle(
-          color: textColor, // Warna teks
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          size: 16,
+          color: Colors.grey,
         ),
+        onTap: onTap,
       ),
-      trailing: const Icon(
-        Icons.arrow_forward_ios,
-        size: 16,
-        color: Colors.grey,
-      ),
-      onTap: onTap,
     );
   }
 }
