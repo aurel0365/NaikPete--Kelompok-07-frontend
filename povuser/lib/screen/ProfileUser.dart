@@ -7,16 +7,12 @@ class EditProfileScreen extends StatelessWidget {
       backgroundColor: Colors.white, // Latar belakang putih
       appBar: AppBar(
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Color.fromARGB(255, 255, 255, 255)), // Ikon putih dengan kode hex
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        backgroundColor: Colors.white,
+        leading: _buildCustomBackButton(context),
         title: const Text(
           'My Profile',
           style: TextStyle(
-            color: Color.fromARGB(255, 255, 255, 255),
+            color: Colors.black,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -76,7 +72,10 @@ class EditProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 32),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                // Navigasi ke layar utama profil
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF42C8DC), // Biru utama
                 padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 64.0),
@@ -108,6 +107,29 @@ class EditProfileScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildCustomBackButton(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(51, 83, 232, 255), // Latar belakang soft orange
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: IconButton(
+        icon: const Icon(Icons.arrow_back, color: Color(0xFF42C8DC)), // Ikon oranye
+        onPressed: () {
+          Navigator.pop(context); // Kembali ke layar sebelumnya
+        },
+      ),
+    );
+  }
+
   Widget _buildTextField({
     required String label,
     required IconData icon,
@@ -128,6 +150,20 @@ class EditProfileScreen extends StatelessWidget {
           fillColor: Colors.grey[100], // Latar belakang input abu-abu muda
         ),
         controller: TextEditingController(text: initialValue),
+      ),
+    );
+  }
+}
+
+class ProfileScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Profile Screen'),
+      ),
+      body: Center(
+        child: const Text('Ini adalah layar profil utama'),
       ),
     );
   }

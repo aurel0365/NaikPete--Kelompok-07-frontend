@@ -1,239 +1,217 @@
+import 'package:alp_naikpete/LihatLokasi.dart';
 import 'package:flutter/material.dart';
 
-class JadwalPetePeteApp extends StatelessWidget {
-  const JadwalPetePeteApp({super.key});
+class Jadwalberangkat extends StatelessWidget {
+  const Jadwalberangkat({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const HomeScreen(),
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: const Color(0xFF42C8DC),
-        fontFamily: 'Roboto',
+    return DefaultTabController(
+      length: 2, // Jumlah tab (Semua Jadwal & Terdekat)
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white, // Warna putih untuk latar belakang AppBar
+          foregroundColor: Colors.black, // Warna hitam untuk teks dan ikon
+          elevation: 0,
+          title: const Text(
+            'Jadwal Berangkat',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+          bottom: const TabBar(
+            labelColor: Color(0xFF42C8DC), // Warna biru untuk teks tab aktif
+            unselectedLabelColor: Colors.grey, // Warna abu-abu untuk teks tab non-aktif
+            indicatorColor: Color(0xFF42C8DC), // Garis bawah tab aktif (biru)
+            indicatorWeight: 3.0,
+            labelStyle: TextStyle(fontWeight: FontWeight.bold),
+            tabs: [
+              Tab(text: 'Semua Jadwal'),
+              Tab(text: 'Terdekat'),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          physics: const BouncingScrollPhysics(), // Smooth scroll physics
+          children: [
+            // Semua Jadwal Tab
+            const JadwalSemua(),
+            // Terdekat Tab
+            const JadwalTerdekat(),
+          ],
+        ),
       ),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+// Widget untuk menampilkan Semua Jadwal dengan fitur pencarian
+class JadwalSemua extends StatelessWidget {
+  const JadwalSemua({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-        centerTitle: true,
-        backgroundColor: const Color(0xFF42C8DC),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const JadwalPetePeteScreen(),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
+          child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const TextField(
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                prefixIcon: Icon(Icons.search, color: Colors.grey),
+                hintText: "Silahkan Mencari Jadwal...",
+                hintStyle: TextStyle(color: Colors.grey),
+                contentPadding: EdgeInsets.symmetric(vertical: 14),
               ),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF42C8DC),
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ),
-          child: const Text(
-            'Lihat Jadwal Pete-pete',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
             ),
           ),
         ),
-      ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: 5, // Jumlah jadwal yang ditampilkan
+            itemBuilder: (context, index) {
+              return Card(
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                elevation: 2,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                child: ListTile(
+                  contentPadding: const EdgeInsets.all(12),
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      'https://via.placeholder.com/80', // Ganti dengan gambar asli
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  title: const Text(
+                    '11 Nov, 07.00',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  subtitle: const Text(
+                    'MP – Jalan Boulevard\nPanakkukang – Jalan Pettarani – Jalan Veteran',
+                    style: TextStyle(
+                      height: 1.5,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  trailing: const Text(
+                    'Lihat lokasi',
+                    style: TextStyle(
+                      color: Color(0xFF42C8DC),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onTap: () {
+                    // Navigasi ke halaman LokasiDetailScreen ketika tombol "Lihat lokasi" ditekan
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LokasiDetailScreen(),
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
 
-class JadwalPetePeteScreen extends StatefulWidget {
-  const JadwalPetePeteScreen({super.key});
-
-  @override
-  _JadwalPetePeteScreenState createState() => _JadwalPetePeteScreenState();
-}
-
-class _JadwalPetePeteScreenState extends State<JadwalPetePeteScreen> {
-  final List<Map<String, String>> jadwalPetePete = [
-    {
-      'nama': 'Pete-pete A',
-      'rute': 'Manchester - Paris',
-      'waktu': '1:40 PM',
-    },
-    {
-      'nama': 'Pete-pete B',
-      'rute': 'Liverpool - London',
-      'waktu': '3:05 PM',
-    },
-    {
-      'nama': 'Pete-pete C',
-      'rute': 'Berlin - Munich',
-      'waktu': '5:00 PM',
-    },
-  ];
-
-  int _selectedTabIndex = 0;
+// Widget untuk menampilkan Jadwal Terdekat dengan fitur pencarian
+class JadwalTerdekat extends StatelessWidget {
+  const JadwalTerdekat({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF42C8DC),
-        elevation: 0,
-        title: const Text(
-          'Jadwal Pete-pete',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-          ),
-        ),
-
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          Container(
-            color: const Color.fromARGB(255, 237, 237, 237),
-            height: 80,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildTabItem('Semua Jadwal', 0),
-                _buildTabItem('Terdekat', 1),
-              ],
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
+          child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const TextField(
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                prefixIcon: Icon(Icons.search, color: Colors.grey),
+                hintText: "Silahkan Mencari Jadwal Terdekat...",
+                hintStyle: TextStyle(color: Colors.grey),
+                contentPadding: EdgeInsets.symmetric(vertical: 14),
+              ),
             ),
           ),
-          const SizedBox(height: 10),
-          Expanded(
-            child: ListView.builder(
-              itemCount: jadwalPetePete.length,
-              itemBuilder: (context, index) {
-                final jadwal = jadwalPetePete[index];
-                return AnimatedPadding(
-                  duration: const Duration(milliseconds: 300),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    elevation: 5,
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.all(16),
-                      title: Text(
-                        jadwal['nama']!,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Color(0xFF42C8DC),
-                        ),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 8),
-                          Text('Tujuan: ${jadwal['rute']}'),
-                          const SizedBox(height: 4),
-                          Text('Waktu: ${jadwal['waktu']}'),
-                        ],
-                      ),
-                      trailing: ElevatedButton(
-                        onPressed: () {
-                          _showDetailDialog(context, jadwal);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF42C8DC),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: const Text(
-                          'Detail',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: 3, // Jumlah jadwal terdekat yang ditampilkan
+            itemBuilder: (context, index) {
+              return Card(
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                elevation: 2,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                child: ListTile(
+                  contentPadding: const EdgeInsets.all(12),
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      'https://via.placeholder.com/80', // Ganti dengan gambar asli
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTabItem(String title, int index) {
-    final bool isSelected = _selectedTabIndex == index;
-
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedTabIndex = index;
-        });
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.white : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 8,
+                  title: const Text(
+                    '11 Nov, 08.00',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
-                ]
-              : [],
-        ),
-        child: Text(
-          title,
-          style: TextStyle(
-            color: isSelected ? const Color(0xFF42C8DC) : Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+                  subtitle: const Text(
+                    'Jalan Sejahtera – Mall XYZ',
+                    style: TextStyle(
+                      height: 1.5,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  trailing: const Text(
+                    'Lihat lokasi',
+                    style: TextStyle(
+                      color: Color(0xFF42C8DC),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onTap: () {
+                    // Navigasi ke halaman LokasiDetailScreen ketika tombol "Lihat lokasi" ditekan
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Home(),
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
           ),
         ),
-      ),
-    );
-  }
-
-  void _showDetailDialog(BuildContext context, Map<String, String> jadwal) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        title: Text(
-          'Detail ${jadwal['nama']}',
-          style: const TextStyle(color: Color(0xFF42C8DC), fontWeight: FontWeight.bold),
-        ),
-        content: Text(
-          'Rute: ${jadwal['rute']}\nWaktu: ${jadwal['waktu']}',
-          style: const TextStyle(color: Colors.black, fontSize: 16),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text(
-              'Tutup',
-              style: TextStyle(color: Color(0xFF42C8DC), fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
-      ),
+      ],
     );
   }
 }
