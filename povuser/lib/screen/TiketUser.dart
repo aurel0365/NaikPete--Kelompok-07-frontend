@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'ConfirmTiket.dart';
+
 class TicketScreen extends StatelessWidget {
   const TicketScreen({super.key});
 
@@ -101,8 +103,10 @@ class TicketScreen extends StatelessWidget {
                   // Tombol untuk membeli tiket
                   ElevatedButton(
                     onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Tiket One Day dibeli!")),
+                      // Arahkan ke layar Konfirmasi Pembelian
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ConfirmationScreen()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
