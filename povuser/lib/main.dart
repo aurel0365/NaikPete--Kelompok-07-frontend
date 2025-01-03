@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // Define the list of pages/screens
   final List<Widget> _pages = [
     HomeScreens(),
-    JadwalPetePeteScreen(),
+    Jadwalberangkat(),
     TicketScreen(),
     AccountUser(),
   ];
