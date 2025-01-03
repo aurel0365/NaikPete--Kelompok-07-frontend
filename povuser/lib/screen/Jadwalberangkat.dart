@@ -1,5 +1,5 @@
-import 'package:alp_naikpete/LihatLokasi.dart';
 import 'package:flutter/material.dart';
+import 'LihatLokasi.dart';
 
 class Jadwalberangkat extends StatelessWidget {
   const Jadwalberangkat({super.key});
@@ -116,7 +116,7 @@ class JadwalSemua extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const LokasiDetailScreen(),
+                        builder: (context) => const Lihatlokasi(),
                       ),
                     );
                   },
@@ -202,7 +202,7 @@ class JadwalTerdekat extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Home(),
+                        builder: (context) => const Lihatlokasi(),
                       ),
                     );
                   },
