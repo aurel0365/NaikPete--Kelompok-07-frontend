@@ -1,4 +1,7 @@
+import 'package:alp_naikpete/Jadwalberangkat.dart';
 import 'package:flutter/material.dart';
+import 'PencarianPete.dart';
+import 'TiketUser.dart';
 
 class HomeScreens extends StatefulWidget {
   const HomeScreens({super.key});
@@ -11,146 +14,154 @@ class _HomeScreenState extends State<HomeScreens> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        title: const Text(
-          "",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications, color: Colors.black),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings, color: Colors.black),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: Container(
-        color: Colors.white,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: const Color(0xFF42C8DC),
-                          child: const Icon(Icons.person, color: Colors.white, size: 30),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 40), // Jarak atas
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Selamat Datang",
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontFamily: 'Montserrat', // Menggunakan Montserrat
                         ),
-                        const SizedBox(width: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              "Halo,",
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: const [
+                          Text(
+                            "Kembali",
+                            style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontFamily: 'Montserrat',
                             ),
-                            Text(
-                              "Michael Sawitto",
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                          ),
+                          SizedBox(width: 6),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(51, 83, 232, 255),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Icons.search, color: Colors.grey),
-                      hintText: "Search",
-                      contentPadding: EdgeInsets.all(16),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 25),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 40.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: Container(
-                        constraints: BoxConstraints(
-                          maxWidth: 800, // Maksimal lebar gambar
-                          maxHeight: 400, // Maksimal tinggi gambar
-                        ),
-                        child: Image.asset(
-                          'assets/images/Tiket.png',
-                          fit: BoxFit.cover, // Gambar tetap proporsional
-                        ),
                       ),
-                    ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.notifications,
+                          color:Color(0xFF42C8DC),
+                          size: 28,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const TextField(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    prefixIcon: Icon(Icons.search, color: Colors.grey),
+                    hintText: "Silahkan Mencari",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    contentPadding: EdgeInsets.symmetric(vertical: 14),
                   ),
                 ),
-                const SizedBox(height: 30),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: const Text(
-                    "Layanan yang anda butuhkan",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
+              ),
+              const SizedBox(height: 20),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.asset(
+                  'assets/images/Tiket.png',
+                  height: 180,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
-                const SizedBox(height: 20),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    int crossAxisCount = constraints.maxWidth > 600 ? 4 : 2;
-                    return GridView.count(
-                      crossAxisCount: crossAxisCount,
-                      shrinkWrap: true,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: [
-                        _buildFeatureCard(Icons.directions_bus, "Pete-pete"),
-                        _buildFeatureCard(Icons.confirmation_num, "Tiket One-Day"),
-                        _buildFeatureCard(Icons.route, "Rute"),
-                        _buildFeatureCard(Icons.location_on, "Halte"),
-                        _buildFeatureCard(Icons.schedule, "Jadwal"),
-                      ],
-                    );
-                  },
+              ),
+              const SizedBox(height: 30),
+              const Text(
+                "Layanan",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 20),
+              GridView.count(
+                crossAxisCount: 3,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  _buildFeatureCard(Icons.directions_bus, "Pete-pete", context, Pencarianpete()),
+                  _buildFeatureCard(Icons.confirmation_num, "Tiket One-Day", context, TicketScreen()),
+                  _buildFeatureCard(Icons.route, "Rute", context, TicketScreen()),
+                  _buildFeatureCard(Icons.location_on, "Halte", context, TicketScreen()),
+                  _buildFeatureCard(Icons.schedule, "Jadwal", context, Jadwalberangkat()),
+                ],
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _buildFeatureCard(IconData icon, String label) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 5,
-      child: Container(
-        padding: const EdgeInsets.all(10),
+  Widget _buildFeatureCard(IconData icon, String label, BuildContext context, Widget page) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => page),
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        elevation: 2,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 40, color: const Color(0xFF42C8DC)),
-            const SizedBox(height: 10),
+            Icon(icon, size: 30, color: const Color(0xFF42C8DC)),
+            const SizedBox(height: 8),
             Text(
               label,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             ),
           ],
         ),
